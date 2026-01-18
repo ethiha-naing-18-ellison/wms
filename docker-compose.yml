@@ -1,0 +1,61 @@
+version: "3.9"
+
+services:
+  # =========================
+  # Backend (Python Flask + Gunicorn)
+  # =========================
+  backend:
+    build: ./backend
+    container_name: wms_backend
+    restart: always
+    env_file:
+      - ./backend/.env
+    expose:
+      - "8000"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  # =========================
+  # Nginx (Reverse Proxy)
+  # =========================
+  nginx:
+    image: nginx:alpine
+    container_name: wms_nginx
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./frontend/dist:/usr/share/nginx/html:ro
+    depends_on:
+      - backend
+
+  # =========================
+  # PostgreSQL Database
+  # =========================
+  db:
+    image: postgres:15
+    container_name: wms_db
+    restart: always
+    environment:
+      POSTGRES_DB: wms_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: tiffany123
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./backend/db/init:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+# =========================
+# Volumes
+# =========================
+volumes:
+  postgres_data:

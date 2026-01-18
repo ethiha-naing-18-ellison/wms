@@ -1,0 +1,4 @@
+sku,name,category,description,tags,low_stock_threshold
+SKU-LAP-TEST01,Lenovo ThinkPad X1 Carbon Gen 11,Electronics,14-inch business laptop,laptop|lenovo|office,10
+SKU-MON-TEST01,Dell UltraSharp 27 Monitor,Electronics,27-inch IPS monitor,monitor|dell|display,8
+SKU-CHA-TEST01,Ergonomic Office Chair,Furniture,Adjustable ergonomic chair,chair|office|ergonomic,12

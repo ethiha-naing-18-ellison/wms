@@ -1,0 +1,4 @@
+supplier_id,product_id,quantity,unit_cost,reference_no,received_date
+120fe7ac-60bd-4408-be0e-ae8f1a8e2710,f233da9a-5ca6-49b2-9a4f-9b31dd7dea4e,10,4500,INV-TEST-001,2026-01-18
+120fe7ac-60bd-4408-be0e-ae8f1a8e2710,6d00145a-178f-4ff6-984f-08f543fc20e1,5,1200,INV-TEST-001,2026-01-18
+120fe7ac-60bd-4408-be0e-ae8f1a8e2710,b834288f-f63a-4265-815f-4dc64289be0b,8,350,INV-TEST-001,2026-01-18

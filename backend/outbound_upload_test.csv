@@ -1,0 +1,4 @@
+product_id,quantity,customer_name,so_reference,dispatch_date
+a56380e4-f0b8-4ffe-856f-e1998c00c171,2,ABC Trading,SO-OUT-001,2026-01-15
+fc7ff089-323e-45c9-b60f-3ca7d6053a60,5,XYZ Enterprise,SO-OUT-002,2026-01-15
+578c5619-6be9-4fb6-82db-d9c279919baa,1,Tech World,SO-OUT-003,2026-01-15
