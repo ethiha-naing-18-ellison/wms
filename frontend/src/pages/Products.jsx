@@ -1,6 +1,6 @@
 // Products.jsx
 import { useEffect, useMemo, useState } from "react";
-import api from "../api/axios";
+import api from "../services/api";
 import { useAuth } from "../auth/AuthContext";
 
 function Modal({ open, title, children, onClose }) {
@@ -65,7 +65,7 @@ const [qrError, setQrError] = useState("");
   const load = async () => {
     setMsg("");
     try {
-      const res = await api.get("/api/products", { params });
+      const res = await api.get("/products", { params });
       setProducts(res.data);
     } catch {
       setMsg("Failed to load products.");
@@ -83,7 +83,7 @@ const openQr = async (product) => {
   setQrLoading(true);
 
   try {
-    const res = await api.get(`/api/products/${product.product_id}/qr`);
+    const res = await api.get(`/products/${product.product_id}/qr`);
 
     setQrData({
       name: product.name,
@@ -141,9 +141,9 @@ const openQr = async (product) => {
       };
 
       if (editing) {
-        await api.put(`/api/products/${editing.product_id}`, payload);
+        await api.put(`/products/${editing.product_id}`, payload);
       } else {
-        await api.post("/api/products", payload);
+        await api.post("/products", payload);
       }
 
       setOpen(false);
@@ -157,13 +157,13 @@ const openQr = async (product) => {
 
   const archive = async (id) => {
     if (!confirm("Archive this product?")) return;
-    await api.patch(`/api/products/${id}/archive`);
+    await api.patch(`/products/${id}/archive`);
     load();
   };
 
   const del = async (id) => {
     if (!confirm("Delete this product?")) return;
-    await api.delete(`/api/products/${id}`);
+    await api.delete(`/products/${id}`);
     load();
   };
 

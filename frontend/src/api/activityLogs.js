@@ -1,6 +1,6 @@
-import api from "./axios";
+import api from "../services/api";
 
 export async function fetchActivityLogs() {
-  const res = await api.get("/api/activity-logs");
+  const res = await api.get("/activity-logs");
   return res.data;
 }

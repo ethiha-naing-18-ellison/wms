@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import api from "../api/axios";
+import api from "../services/api";
 import { useAuth } from "../auth/AuthContext";
 
 export default function Suppliers() {
@@ -21,7 +21,7 @@ export default function Suppliers() {
   const load = async () => {
     setMsg("");
     try {
-      const res = await api.get("/api/suppliers");
+      const res = await api.get("/suppliers");
       setSuppliers(res.data);
     } catch (err) {
       setMsg(err?.response?.data?.error || "Failed to load suppliers.");
@@ -40,7 +40,7 @@ export default function Suppliers() {
     }
 
     try {
-      await api.post("/api/suppliers", {
+      await api.post("/suppliers", {
         name: form.name.trim(),
         contact_person: form.contact_person.trim() || null,
         phone: form.phone.trim() || null,

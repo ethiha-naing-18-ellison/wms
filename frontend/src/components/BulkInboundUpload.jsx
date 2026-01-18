@@ -1,5 +1,5 @@
 import { useState } from "react";
-import api from "../api/axios";
+import api from "../services/api";
 
 export default function BulkInboundUpload({ onSuccess }) {
   const [file, setFile] = useState(null);
@@ -19,7 +19,7 @@ export default function BulkInboundUpload({ onSuccess }) {
       const formData = new FormData();
       formData.append("file", file); // 🔑 MUST be "file"
 
-      const res = await api.post("/api/bulk/inbound", formData, {
+      const res = await api.post("/bulk/inbound", formData, {
         // ❗ DO NOT manually set Content-Type
         headers: {
           // Axios interceptor already injects Authorization

@@ -1,6 +1,6 @@
 // frontend/src/pages/Inbound.jsx
 import { useEffect, useState } from "react";
-import api from "../api/axios";
+import api from "../services/api";
 import { useAuth } from "../auth/AuthContext";
 import BulkInboundUpload from "../components/BulkInboundUpload";
 
@@ -35,9 +35,9 @@ export default function Inbound() {
     setMsg("");
     try {
       const [sRes, pRes, hRes] = await Promise.all([
-        api.get("/api/suppliers"),
-        api.get("/api/products"),
-        api.get("/api/inbound"),
+        api.get("/suppliers"),
+        api.get("/products"),
+        api.get("/inbound"),
       ]);
 
       setSuppliers(sRes.data);
@@ -66,7 +66,7 @@ export default function Inbound() {
     if (!scanSku.trim()) return;
 
     try {
-      const res = await api.get("/api/products/lookup", {
+      const res = await api.get("/products/lookup", {
         params: { sku: scanSku.trim() },
       });
 
@@ -109,7 +109,7 @@ export default function Inbound() {
         throw new Error("Unit Cost (RM) is required and must be >= 0");
       }
 
-      await api.post("/api/inbound", {
+      await api.post("/inbound", {
         supplier_id: form.supplier_id,
         reference_no: form.reference_no || null,
         received_date: form.received_date,

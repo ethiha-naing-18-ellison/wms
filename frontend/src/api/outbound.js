@@ -1,16 +1,10 @@
 // frontend/src/api/outbound.js
-import api from "./axios";
+import api from "../services/api";
 
 /**
  * OUTBOUND API
- * baseURL = http://localhost:5000
- * All routes MUST include /api prefix
+ * Uses centralized api instance with baseURL "/api"
  */
-
-function authHeader() {
-  const token = localStorage.getItem("token");
-  return token ? { Authorization: `Bearer ${token}` } : {};
-}
 
 /**
  * =========================
@@ -19,9 +13,7 @@ function authHeader() {
  * =========================
  */
 export async function getOutboundHistory() {
-  const res = await api.get("/api/outbound", {
-    headers: authHeader(),
-  });
+  const res = await api.get("/outbound");
   return res.data;
 }
 
@@ -32,9 +24,7 @@ export async function getOutboundHistory() {
  * =========================
  */
 export async function createOutbound(payload) {
-  const res = await api.post("/api/outbound", payload, {
-    headers: authHeader(),
-  });
+  const res = await api.post("/outbound", payload);
   return res.data; // { message, outbound_id }
 }
 
@@ -49,11 +39,10 @@ export async function uploadOutboundAttachment(outboundId, file) {
   form.append("file", file);
 
   const res = await api.post(
-    `/api/outbound/${outboundId}/attachments`,
+    `/outbound/${outboundId}/attachments`,
     form,
     {
       headers: {
-        ...authHeader(),
         "Content-Type": "multipart/form-data",
       },
     }
@@ -72,9 +61,8 @@ export async function bulkUploadOutbound(file) {
   const form = new FormData();
   form.append("file", file);
 
-  const res = await api.post("/api/bulk/outbound", form, {
+  const res = await api.post("/bulk/outbound", form, {
     headers: {
-      ...authHeader(),
       "Content-Type": "multipart/form-data",
     },
   });

@@ -1,6 +1,6 @@
 // frontend/src/pages/Dashboard.jsx
 import { useEffect, useState } from "react";
-import api from "../api/axios";
+import api from "../services/api";
 import {
   BarChart,
   Bar,
@@ -54,7 +54,7 @@ const [valueByCategory, setValueByCategory] = useState([]);
      Uses existing /api/products
   ========================= */
   useEffect(() => {
-    api.get("/api/products")
+    api.get("/products")
       .then(res => setProducts(res.data))
       .catch(() => {});
   }, []);
@@ -73,7 +73,7 @@ const [valueByCategory, setValueByCategory] = useState([]);
   if (productId) params.product_id = productId;
 
   // ✅ 1) Summary is core — if this fails, dashboard truly fails
-  const res = await api.get("/api/dashboard/summary", { params });
+  const res = await api.get("/dashboard/summary", { params });
   setSummary(res.data);
 
   // ✅ 2) Valuation is optional — if it fails, we DO NOT break the whole page

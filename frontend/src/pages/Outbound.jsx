@@ -1,6 +1,6 @@
 // frontend/src/pages/Outbound.jsx
 import { useEffect, useMemo, useState } from "react";
-import api from "../api/axios";
+import api from "../services/api";
 import { createOutbound, uploadOutboundAttachment } from "../api/outbound";
 import BulkOutboundUpload from "../components/BulkOutboundUpload";
 import OutboundHistoryTable from "../components/OutboundHistoryTable";
@@ -56,10 +56,7 @@ const [scanMsg, setScanMsg] = useState("");
       setError("");
       try {
         // You have /api/products route in backend
-        const token = localStorage.getItem("token");
-        const res = await api.get("/api/products", {
-          headers: token ? { Authorization: `Bearer ${token}` } : {},
-        });
+        const res = await api.get("/products");
         setProducts(res.data || []);
       } catch (e) {
         setError(
@@ -89,7 +86,7 @@ const [scanMsg, setScanMsg] = useState("");
   if (!scanSku.trim()) return;
 
   try {
-    const res = await api.get("/api/products/lookup", {
+    const res = await api.get("/products/lookup", {
       params: { sku: scanSku.trim() },
     });
 

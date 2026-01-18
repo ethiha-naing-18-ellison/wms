@@ -1,11 +1,11 @@
 // frontend/src/api/dashboard.js
-import api from "./axios";
+import api from "../services/api";
 
 /**
  * Dashboard summary (already working)
  */
 export async function fetchDashboardSummary(params = {}) {
-  const res = await api.get("/api/dashboard/summary", { params });
+  const res = await api.get("/dashboard/summary", { params });
   return res.data;
 }
 
@@ -15,7 +15,7 @@ export async function fetchDashboardSummary(params = {}) {
  * GET /api/inventory/valuation/summary
  */
 export async function fetchTotalInventoryValue() {
-  const res = await api.get("/api/inventory/valuation/summary");
+  const res = await api.get("/inventory/valuation/summary");
   return res.data;
 }
 
@@ -25,6 +25,6 @@ export async function fetchTotalInventoryValue() {
  * GET /api/inventory/valuation/categories
  */
 export async function fetchInventoryValueByCategory() {
-  const res = await api.get("/api/inventory/valuation/categories");
+  const res = await api.get("/inventory/valuation/categories");
   return res.data;
 }

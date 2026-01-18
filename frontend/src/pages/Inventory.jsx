@@ -1,6 +1,6 @@
 // Inventory.jsx
 import { useEffect, useMemo, useState } from "react";
-import api from "../api/axios";
+import api from "../services/api";
 import BulkInventoryUpload from "../components/BulkInventoryUpload";
 
 export default function Inventory() {
@@ -27,10 +27,10 @@ export default function Inventory() {
     setMsg("");
 
     try {
-      const productsRes = await api.get("/api/products", { params });
+      const productsRes = await api.get("/products", { params });
       const products = productsRes.data;
 
-      const invRes = await api.get("/api/inventory");
+      const invRes = await api.get("/inventory");
       const invMap = new Map(invRes.data.map(i => [i.product_id, i]));
 
       const merged = products.map(p => {

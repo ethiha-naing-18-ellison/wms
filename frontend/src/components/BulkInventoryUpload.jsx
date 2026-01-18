@@ -1,5 +1,5 @@
 import { useState } from "react";
-import api from "../api/axios";
+import api from "../services/api";
 import { useAuth } from "../auth/AuthContext";
 
 export default function BulkInventoryUpload({ onSuccess }) {
@@ -23,7 +23,7 @@ export default function BulkInventoryUpload({ onSuccess }) {
       const formData = new FormData();
       formData.append("file", file);
 
-      await api.post("/api/bulk/inventory", formData); // DO NOT set Content-Type manually
+      await api.post("/bulk/inventory", formData); // DO NOT set Content-Type manually
       setMsg("Bulk upload successful.");
       setFile(null);
       onSuccess?.();
