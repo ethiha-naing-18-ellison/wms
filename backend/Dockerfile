@@ -1,34 +1,20 @@
-# Use Python 3.10 slim image
-FROM python:3.10-slim
+# Use Node.js LTS image
+FROM node:18-alpine
 
 # Set working directory
 WORKDIR /app
 
-# Set environment variables
-ENV PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONUNBUFFERED=1
+# Copy package files
+COPY package*.json ./
 
-# Install system dependencies
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-    gcc \
-    && rm -rf /var/lib/apt/lists/*
-
-# Copy requirements file (if it exists)
-COPY requirements.txt* ./
-
-# Install Python dependencies
-RUN if [ -f requirements.txt ]; then pip install --no-cache-dir -r requirements.txt; fi
-
-# Install Gunicorn
-RUN pip install --no-cache-dir gunicorn
+# Install dependencies
+RUN npm install --production
 
 # Copy application code
 COPY . .
 
-# Expose port 8000
-EXPOSE 8000
+# Expose port 5000
+EXPOSE 5000
 
-# Run Gunicorn
-# Assuming Flask app instance is named 'app' in app.py
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--workers", "4", "--timeout", "120", "app:app"]
+# Start the server
+CMD ["npm", "start"]
