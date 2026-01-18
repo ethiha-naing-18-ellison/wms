@@ -62,7 +62,7 @@ exports.getDashboardSummary = async (req, res) => {
         u.email,
         u.role
       FROM activity_logs al
-      LEFT JOIN users u ON u.user_id = al.user_id
+      LEFT JOIN users u ON u.id = al.user_id
       WHERE al.created_at BETWEEN $1 AND $2
       ORDER BY al.created_at DESC
       LIMIT 10

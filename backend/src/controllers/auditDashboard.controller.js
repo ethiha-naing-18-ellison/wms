@@ -11,8 +11,8 @@ exports.getAuditSummary = async (req, res) => {
       COUNT(*) AS total_actions,
       COUNT(*) FILTER (WHERE entity = 'inbound') AS inbound_actions,
       COUNT(*) FILTER (WHERE entity = 'outbound') AS outbound_actions,
-      COUNT(DISTINCT user_id) AS active_users
-    FROM activity_logs
+      COUNT(DISTINCT al.user_id) AS active_users
+    FROM activity_logs al
     WHERE created_at >= NOW() - INTERVAL '30 days'
   `);
 
@@ -29,7 +29,7 @@ exports.getTopUsers = async (req, res) => {
       u.role,
       COUNT(*) AS action_count
     FROM activity_logs al
-    JOIN users u ON u.user_id = al.user_id
+    JOIN users u ON u.id = al.user_id
     GROUP BY u.email, u.role
     ORDER BY action_count DESC
     LIMIT 10
